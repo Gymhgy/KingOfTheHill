@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace KingOfTheHill {
+    /// <summary>
+    /// A static class to provide I/O with regards to <see cref="Submission"/>
+    /// </summary>
     public static class IOHandler {
 
         /// <summary>
@@ -38,10 +41,10 @@ namespace KingOfTheHill {
         }
 
         /// <summary>
-        /// Runs a group of submissions asynchrounously using a given lambda
+        /// Runs a group of submissions asynchrounously using a given argument selector function
         /// </summary>
-        /// <param name="submission">The submission to be run</param>
-        /// <param name="arguments">The arguments to be passed into the submission</param>
+        /// <param name="submissions">The submission to be run</param>
+        /// <param name="argumentsSelector">A function that outputs a <c>string[]</c> when run with a <c>Submission</c></param>
         /// <returns></returns>
         public async static Task<Dictionary<string, string>> RunSubmissionGroup(IEnumerable<Submission> submissions, Func<Submission, string[]> argumentsSelector) {
             Dictionary<string, string> results = new Dictionary<string, string>();

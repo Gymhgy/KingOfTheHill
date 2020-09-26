@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace KingOfTheHill {
-    public class Matchmaker {
+    /// <summary>
+    /// Static class used for creating matches between submissions.
+    /// </summary>
+    public static class Matchmaker {
 
         /// <summary>
-        /// Runs a round robin tournament with <code>rounds</code> rounds. Note: Only works in 1v1 games
+        /// Runs a round robin tournament with <paramref>rounds</paramref> rounds. Note: Only works in 1v1 games
         /// </summary>
         /// <param name="pool">Contestant Pool</param>
         /// <param name="rounds">Number of rounds to play</param>

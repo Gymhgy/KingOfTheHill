@@ -20,6 +20,10 @@ namespace KingOfTheHill {
         /// </summary>
         public ReadOnlyDictionary<Submission, int> Results { get; }
 
+        /// <summary>
+        /// Initializes a Match, with the <paramref>Participants</paramref> list generated automatically from the provided dictionary
+        /// </summary>
+        /// <param name="results">The results of the match, with each <code>KeyValuePair</code> being a <code>Submission</code> and their points earned.</param>
         public Match(IDictionary<Submission, int> results) {
             Results = new ReadOnlyDictionary<Submission, int>(results);
             Participants = new ReadOnlyCollection<Submission>(results.Keys.ToList());

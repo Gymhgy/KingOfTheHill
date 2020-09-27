@@ -46,10 +46,10 @@ namespace KingOfTheHill {
         /// <param name="submissions">The submission to be run</param>
         /// <param name="argumentsSelector">A function that outputs a <c>string[]</c> when run with a <c>Submission</c></param>
         /// <returns></returns>
-        public async static Task<Dictionary<string, string>> RunSubmissionGroup(IEnumerable<Submission> submissions, Func<Submission, string[]> argumentsSelector) {
-            Dictionary<string, string> results = new Dictionary<string, string>();
+        public async static Task<Dictionary<Submission, string>> RunSubmissionGroup(IEnumerable<Submission> submissions, Func<Submission, string[]> argumentsSelector) {
+            Dictionary<Submission, string> results = new Dictionary<Submission, string>();
             foreach (var submission in submissions) {
-                results[submission.Name] = await Task.Run(() => RunSubmission(submission, argumentsSelector(submission)));
+                results[submission] = await Task.Run(() => RunSubmission(submission, argumentsSelector(submission)));
             }
             return results;
         }

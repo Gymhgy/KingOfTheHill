@@ -16,9 +16,9 @@ namespace KingOfTheHill {
         /// </summary>
         /// <param name="submission">The submission to be run</param>
         /// <param name="arguments">The arguments to be passed into the submission</param>
-        /// <param name="timeout">(Optional)The timeout in milliseconds. Default is 500ms</param>
+        /// <param name="timeout">(Optional)The timeout in milliseconds. Default is -1, which means infinite</param>
         /// <returns></returns>
-        public static string RunSubmission(Submission submission, string[] arguments, int timeout = 500) {
+        public static string RunSubmission(Submission submission, string[] arguments, int timeout = -1) {
             var formattedArgs = string.Join(" ", arguments.Prepend(submission.FilePath).Select(EscapeCommandLineArg));
             var startInfo = new ProcessStartInfo(submission.ExecutionPath, formattedArgs)
             {

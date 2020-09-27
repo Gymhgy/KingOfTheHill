@@ -34,5 +34,29 @@ namespace KingOfTheHill {
             return new MatchHistory(Matches.Where(x => x.Participants.Contains(submission)).ToList());
         }
 
+        /// <summary>
+        /// Gets the total points for each participant in this match history, and sorts it
+        /// </summary>
+        /// <returns>A list containing a tuple of submission + points, sorted based on poitns.</returns>
+        public List<(Submission submission, int points)> Rankings() {
+            var pointsPerSubmission = new Dictionary<Submission, int>();
+
+            foreach(var match in this.Matches) {
+                foreach(var (participant, points) in match.Results) {
+                    //We have to check if the participant exists in the dictionary first, else we'll get an error
+                    if(pointsPerSubmission.ContainsKey(participant)) {
+                        pointsPerSubmission[participant] += points;
+
+                    }
+                    //If it doesn't exist, initialize it
+                    else {
+                        pointsPerSubmission[participant] = points;
+                    }
+                }
+            }
+
+            return pointsPerSubmission.Select(x => (x.Key, x.Value)).OrderByDescending(x => x.Value).ToList();
+        }
+
     }
 }

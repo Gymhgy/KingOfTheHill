@@ -16,27 +16,27 @@ namespace KingOfTheHill {
         /// </summary>
         /// <param name="submission">The submission to be run</param>
         /// <param name="arguments">The arguments to be passed into the submission</param>
-        /// <param name="timeout">(Optional)The timeout in milliseconds. Default is 50ms</param>
+        /// <param name="timeout">(Optional)The timeout in milliseconds. Default is 500ms</param>
         /// <returns></returns>
-        public static string RunSubmission(Submission submission, string[] arguments, int timeout = 50) {
-            var startInfo = new ProcessStartInfo(submission.ExecutionPath, string.Join(" ", arguments.Select(EscapeCommandLineArg)))
+        public static string RunSubmission(Submission submission, string[] arguments, int timeout = 500) {
+            var formattedArgs = string.Join(" ", arguments.Prepend(submission.FilePath).Select(EscapeCommandLineArg));
+            var startInfo = new ProcessStartInfo(submission.ExecutionPath, formattedArgs)
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
-            using (Process p = Process.Start(startInfo)) {
-                if(!p.WaitForExit(timeout)) {
-                    try {
-                        p.Kill();
-                        return "";
-                    }
-                    catch (InvalidOperationException) {
-                        p.WaitForExit();
-                        return p.StandardOutput.ReadToEnd();
-                    }
-                }
-                return p.StandardOutput.ReadToEnd();
+
+            string output = "";
+            using (Process process = Process.Start(startInfo)) {
+                process.OutputDataReceived += (sender, e) => {
+                    if (!string.IsNullOrEmpty(e.Data))
+                        output += e.Data;
+                };
+
+                process.BeginOutputReadLine();
+                process.WaitForExit(timeout);
+                return output;
             }
         }
 

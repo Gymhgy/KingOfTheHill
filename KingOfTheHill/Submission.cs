@@ -78,7 +78,7 @@ namespace KingOfTheHill {
         /// <param name="y">The second submission to be compared</param>
         /// <returns></returns>
         public bool Equals(Submission x, Submission y) {
-            return x.Name == y.Name;
+            return x.Equals(y);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace KingOfTheHill {
         /// <param name="obj"></param>
         /// <returns></returns>
         public int GetHashCode(Submission obj) {
-            return obj.Name.GetHashCode();
+            return obj.GetHashCode();
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace KingOfTheHill {
         /// <param name="obj">The submission to be compared against.</param>
         /// <returns></returns>
         public override bool Equals(object obj) {
-            throw new NotImplementedException();
+            return obj is Submission && this.Name == ((Submission)obj).Name;
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace KingOfTheHill {
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode() {
-            throw new NotImplementedException();
+            return this.Name.GetHashCode();
         }
 
         /// <summary>
